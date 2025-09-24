@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>justin-sun Podcast Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn" onclick="newChat()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    New chat
+                </button>
+            </div>
+
+            <!-- Process Steps in Sidebar -->
+            <div class="process-section">
+                <h3 class="section-title">Setup Steps</h3>
+                
+                <!-- Step 1: Add RSS Feeds -->
+                <div class="process-card collapsed" id="step1">
+                    <div class="process-header" onclick="toggleStep('step1')">
+                        <span class="step-number">1</span>
+                        <span class="step-title">Add RSS Feeds</span>
+                        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <textarea id="feeds" placeholder="Enter RSS URLs, one per line&#10;e.g., https://lexfridman.com/feed/podcast/" rows="3"></textarea>
+                        <div class="input-row">
+                            <label>Episodes per feed:</label>
+                            <input id="latestN" type="number" value="20" min="1" max="50" />
+                        </div>
+                        <button id="btnAdd" class="process-btn">Parse Feeds</button>
+                        <div id="outAdd" class="output"></div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Process Podcast -->
+                <div class="process-card collapsed" id="step2">
+                    <div class="process-header" onclick="toggleStep('step2')">
+                        <span class="step-number">2</span>
+                        <span class="step-title">Process Podcast</span>
+                        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <input id="podcastName" placeholder="Exact podcast name from step 1" />
+                        <button id="btnProcess" class="process-btn">Process Podcast</button>
+                        <div id="outProcess" class="output"></div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Generate Persona -->
+                <div class="process-card collapsed" id="step3">
+                    <div class="process-header" onclick="toggleStep('step3')">
+                        <span class="step-number">3</span>
+                        <span class="step-title">Generate Persona</span>
+                        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <input id="podcastPersona" placeholder="Processed podcast name" />
+                        <button id="btnPersona" class="process-btn">Generate Persona</button>
+                        <div id="outPersona" class="output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat History -->
+            <div class="chat-history">
+                <h3 class="section-title">Recent Chats</h3>
+                <div id="chatHistoryList">
+                    <!-- Chat history items will be added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="main-chat">
+            <div class="chat-header">
+                <div class="model-selector">
+                    <div class="model-name">🎙️ Podcast Persona Analyzer</div>
+                    <div class="model-description">Create AI debates between podcast personalities</div>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-message" id="welcomeMessage">
+                    <div class="welcome-content">
+                        <h1>How can I help you today?</h1>
+                        <p>Start by processing some podcasts using the sidebar, then ask me to create debates between different podcast personalities.</p>
+                    </div>
+                </div>
+
+                <!-- Messages will be added here -->
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <div class="input-header">
+                        <input 
+                            type="text" 
+                            id="podcastsInput" 
+                            class="podcasts-input"
+                            placeholder="Podcast names (comma-separated, optional)"
+                        />
+                    </div>
+                    <div class="message-input-container">
+                        <textarea 
+                            id="messageInput" 
+                            class="message-input" 
+                            placeholder="Message Podcast Persona Analyzer..."
+                            rows="1"
+                        ></textarea>
+                        <button id="sendButton" class="send-button" onclick="sendMessage()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="m5 12 7-7 7 7M12 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-footer">
+                    <p>Podcast Analyzer can make mistakes. Check important info.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
